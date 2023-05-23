@@ -37,7 +37,15 @@ class Database {
      * @return any resulting query data with PDO::FETCH_ASSOC
      */
 
-    public function execute($query, $parameterArray) {
+    public function fetchOne($query, $parameterArray) {
+        $prepared = $this->db->prepare($query);
+        $prepared->execute($parameterArray);
+        $values = $prepared->fetch(PDO::FETCH_ASSOC);
+
+        return $values;
+    }
+    
+    public function fetchAll($query, $parameterArray) {
         $prepared = $this->db->prepare($query);
         $prepared->execute($parameterArray);
         $values = $prepared->fetchAll(PDO::FETCH_ASSOC);

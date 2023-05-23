@@ -16,13 +16,22 @@ if ($action === "login") {
         $isOk = false;
     }
 
+    if ($isOk) {
+        $isLoggedIn = $userModel->loginUser($_POST["username"], $_POST["password"]);
+
+        if (!$isLoggedIn) {
+            $error = "INCORRECT_CREDENTIALS";
+            $isOk = false;
+        } else {
+            header('Location: /dashboard');
+            exit();
+        }
+    }
+
     if (!$isOk) {
         header('Location: /login?error=' . $error);
         exit();
     }
-
-    $user = $userModel->loginUser($_POST["username"], $_POST["password"]);
-    print_r($user);
 }
 
 require __DIR__ . '/../view/login/login.php';

@@ -17,6 +17,9 @@
                 <input type="password" class="form-control" id="inputPassword" placeholder="*************" name="password">
             </div>
         </div>
+        <div class="mb-3 row text-end">
+            <label for="inputPassword" class="col-sm-12 col-form-label"><a href="/register" title="Registrace">Registrace</a></label>
+        </div>
         <div class="mb-3 row">
             <input type="submit" class="form-control btn btn-success" id="inputSubmit" value="Přihlásit">
         </div>

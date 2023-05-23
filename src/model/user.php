@@ -12,10 +12,18 @@ class UserModel extends BaseModel {
      * @return User|null 
      */
     public function loginUser($username, $password) {
-        $query = 'SELECT id,username, email FROM users WHERE username = :username OR email = :username';
+        $query = 'SELECT id, username, email, password FROM users WHERE username = :username OR email = :username';
         $parameters = array(":username" => $username);
-        $result = self::$database->execute($query, $parameters);
+        $result = self::$database->fetchOne($query, $parameters);
 
-        return $result;
+        $hashFromDatabase = $result["password"];
+
+        if (password_verify($password, $hashFromDatabase)) {
+            $user = new User($result["id"], $result["username"], $result["email"], time() + 60 * 60 * 72, SESSIONTOKEN);
+            $_SESSION["user"] = $user;
+            return true;
+        }
+
+        return false;
     }
 }

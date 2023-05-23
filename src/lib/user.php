@@ -5,16 +5,22 @@ class User {
     public $username;
     public $email;
     public $loginExpiration;
+    private $sessionToken;
 
-    public function __construct($id, $username, $email, $loginExpiration) {
+    public function __construct($id, $username, $email, $loginExpiration, $sessionToken) {
         $this->id = $id;
         $this->username = $username;
         $this->email = $email;
         $this->loginExpiration = $loginExpiration;
+        $this->sessionToken = $sessionToken;
     }
 
     public function isAuthenticated() {
         if ($this->loginExpiration < time()) {
+            return false;
+        }
+
+        if ($this->sessionToken !== SESSIONTOKEN) {
             return false;
         }
 
