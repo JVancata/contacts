@@ -2,3 +2,25 @@
     max-width: 400px;
     margin: 0 auto;
 }
+
+footer {
+    background-color: #aca7a6;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    position: absolute;
+    bottom: 0;
+}
+
+header {
+    background-color: #6b1c66;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+header h1 {
+    font-size: 20px;
+}

@@ -18,3 +18,6 @@ if (empty($seo)) {
 </head>
 
 <body>
+    <?php
+    require 'header.php';
+    ?>

@@ -9,7 +9,6 @@ require_once __DIR__ . "/../layout/layout_top.php";
 <div class="container">
     <h1 class="text-center">Dashboard</h1>
     <p><span class="fw-bold">User:</span> <?php echo $_SESSION["unserializedUser"]->username; ?></p>
-    <a href="/logout" title="Odhlásit">Odhlásit</a>
 </div>
 
 
