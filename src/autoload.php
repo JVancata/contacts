@@ -1,7 +1,8 @@
 <?php
 
 require_once "config.php";
-require_once "db.php";
+require_once "lib/database.php";
+require_once "lib/seo.php";
 
 if (PRODUCTION) {
     ini_set('display_errors', 0);

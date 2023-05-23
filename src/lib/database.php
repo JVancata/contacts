@@ -1,16 +1,14 @@
 <?php
 require_once 'autoload.php';
 
-class Db
-{
+class Database {
     private $dbserver = DATABASESERVER;
     private $dbname = DATABASENAME;
     private $dbuser = DATABASEUSER;
     private $dbpass = DATABASEPASSWORD;
     private $db;
 
-    public function __construct()
-    {
+    public function __construct() {
         try {
             $this->db = new PDO(
                 "mysql:host=" . $this->dbserver . ";dbname=" . $this->dbname . ";",
@@ -33,12 +31,15 @@ class Db
         }
     }
 
+    /**
+     * @param string $query SQL Query, parameters are used like this: :username
+     * @param array|null $parameterArray associative array of parameters - array(":username"=>$username)
+     * @return any resulting query data with PDO::FETCH_ASSOC
+     */
 
-    public function getAllContacts()
-    {
-        $query = 'SELECT * FROM contacts';
+    public function execute($query, $parameterArray) {
         $prepared = $this->db->prepare($query);
-        $prepared->execute();
+        $prepared->execute($parameterArray);
         $values = $prepared->fetchAll(PDO::FETCH_ASSOC);
 
         return $values;
