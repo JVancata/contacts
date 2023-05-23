@@ -9,11 +9,15 @@ if (!empty($_SESSION["user"])) {
     exit();
 }
 
-if ($action === "login") {
+if ($action === "register") {
     $isOk = true;
 
     if (empty($_POST["username"])) {
         $error = "EMPTY_USERNAME";
+        $isOk = false;
+    }
+    if (empty($_POST["email"])) {
+        $error = "EMPTY_EMAIL";
         $isOk = false;
     }
     if (empty($_POST["password"])) {
@@ -22,24 +26,25 @@ if ($action === "login") {
     }
 
     if ($isOk) {
-        $user = $userModel->loginUser($_POST["username"], $_POST["password"]);
+        $result = $userModel->registerUser($_POST["username"], $_POST["email"], $_POST["password"]);
 
-        if (!$user) {
-            $error = "INCORRECT_CREDENTIALS";
+        if (is_string($result)) {
+            $error = $result;
             $isOk = false;
         } else {
-            $_SESSION["user"] = serialize($user);
+            $_SESSION["user"] = serialize($result);
             header('Location: /dashboard');
             exit();
         }
     }
 
     if (!$isOk) {
-        header('Location: /login?error=' . $error);
+        $_SESSION["last_form"] = $_POST;
+        header('Location: /register?error=' . $error);
         exit();
     }
 }
 
-require __DIR__ . '/../view/login/login.php';
+require __DIR__ . '/../view/register/register.php';
 $_SESSION["last_form"] = [];
 exit();

@@ -1,8 +1,15 @@
 <?php
+session_start();
 
 require_once "config.php";
 require_once "lib/database.php";
 require_once "lib/seo.php";
+require_once "lib/user.php";
+require_once "lib/user_guard.php";
+
+if(!empty($_SESSION["user"])) {
+    $_SESSION["unserializedUser"] = unserialize($_SESSION["user"]);
+}
 
 if (PRODUCTION) {
     ini_set('display_errors', 0);
