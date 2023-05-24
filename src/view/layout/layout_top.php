@@ -15,6 +15,7 @@ if (empty($seo)) {
     <link rel="icon" type="image/png" href="<?php echo $seo->favicon; ?>">
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/font_awesome_all.min.css">
 </head>
 
 <body>
