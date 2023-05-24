@@ -33,6 +33,20 @@ class GroupModel extends BaseModel {
     }
 
     /**
+     * Warning!!! This does not check that the user owns the contact!
+     * @param string $contactId id of contact
+     * @param string $groupId id of group
+     * @return integer result of the DB query
+     */
+    public function unassignGroupFromContact($contactId, $groupId) {
+        $query = 'DELETE FROM contact_groups WHERE contact_id = :contact_id AND group_id = :group_id';
+        $parameters = array(":contact_id" => $contactId, ":group_id" => $groupId);
+        $result = self::$database->execute($query, $parameters);
+
+        return $result;
+    }
+
+    /**
      * @param string $userId id of the user
      * @param string $groupId id of the group
      * @return Group

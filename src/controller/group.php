@@ -82,8 +82,48 @@ if ($action === "assign") {
             $group = $groupModel->getOneGroupForUser($_SESSION["unserializedUser"]->id, $_POST["groupId"]);
 
             // Then assign the group
-            if (!empty($contact)) {
+            if (!empty($group)) {
                 $groupModel->assignGroupToContact($contact["id"], $group["id"]);
+                header('Location: /contact/detail/' . $contact["id"]);
+                exit();
+            }
+        }
+    }
+
+    if (!$isOk) {
+        $_SESSION["last_form"] = $_POST;
+        header('Location: /dashboard?error=' . $error);
+        exit();
+    }
+
+    header('Location: /dashboard');
+    exit();
+}
+
+if ($action === "unassign") {
+    $isOk = true;
+
+    if (!is_numeric($_GET["contactId"])) {
+        $error = "INVALID_CONTACT_ID";
+        $isOk = false;
+    }
+
+    if (!is_numeric($_GET["groupId"])) {
+        $error = "INVALID_GROUP_ID";
+        $isOk = false;
+    }
+
+    // No error detected
+    if ($isOk) {
+        // Check if the contact belongs to the user
+        $contact = $contactModel->getOneContactForUser($_SESSION["unserializedUser"]->id, $_GET["contactId"]);
+        if (!empty($contact)) {
+            // Check if the group belongs to the user
+            $group = $groupModel->getOneGroupForUser($_SESSION["unserializedUser"]->id, $_GET["groupId"]);
+
+            // Then unassign the group
+            if (!empty($group)) {
+                $groupModel->unassignGroupFromContact($contact["id"], $group["id"]);
                 header('Location: /contact/detail/' . $contact["id"]);
                 exit();
             }

@@ -38,7 +38,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
                             <span class="d-block pt-3">
                                 <?php
                                 foreach ($contactGroups as $contactGroup) {
-                                    echo '<span class="badge me-2" style="background-color:' . $contactGroup["background_color"] . ';color:' . $contactGroup["text_color"] . '">' . $contactGroup["name"] . '</span>';
+                                    echo '<a href="/group/unassign/?groupId=' . $contactGroup["id"] . '&contactId=' . $contact["id"] . '" onclick="return confirm(`Opravdu chcete skupinu ' . $contactGroup["name"] . ' z kontaktu odstranit?`)"><span class="badge me-2" style="background-color:' . $contactGroup["background_color"] . ';color:' . $contactGroup["text_color"] . '">' . $contactGroup["name"] . '</span></a>';
                                 }
                                 ?>
                                 <button class="btn badge rounded-pill text-bg-primary" data-bs-toggle="modal" data-bs-target="#groupAssignModal"><i class="fa-solid fa-plus"></i></button>
