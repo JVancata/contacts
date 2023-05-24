@@ -35,7 +35,7 @@ if ($action === "add") {
     if ($isOk) {
         // Insert the group
         $textColor = $_POST["textColor"] === "white" ? "#FFFFFF" : "#000000";
-        $groupId = $groupModel->createGroupForUser($_SESSION["unserializedUser"]->id, $_POST["name"], $textColor, $_POST["backgroundColor"]);
+        $groupId = $groupModel->createGroupForUser($_SESSION["unserializedUser"]->id, htmlspecialchars($_POST["name"]), $textColor, $_POST["backgroundColor"]);
 
         // If the form has contact ID, we have to assign it as well
         if (is_numeric($_POST["contactId"])) {

@@ -25,7 +25,7 @@ if ($action === "add") {
     }
 
     if ($hasIdentifyingName) {
-        $result = $contactModel->createContactForUser($_SESSION["unserializedUser"]->id, $_POST["first_name"], $_POST["last_name"], $_POST["nickname"], $_POST["birth_date"]);
+        $result = $contactModel->createContactForUser($_SESSION["unserializedUser"]->id, htmlspecialchars($_POST["first_name"]), htmlspecialchars($_POST["last_name"]), htmlspecialchars($_POST["nickname"]), htmlspecialchars($_POST["birth_date"]));
 
         if (!$result) {
             $error = "CONTACT_INSERT_ERROR";

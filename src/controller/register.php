@@ -27,7 +27,7 @@ if ($action === "register") {
     }
 
     if ($isOk) {
-        $result = $userModel->registerUser($_POST["username"], $_POST["email"], $_POST["password"]);
+        $result = $userModel->registerUser(htmlspecialchars($_POST["username"]), htmlspecialchars($_POST["email"]), $_POST["password"]);
 
         if (is_string($result)) {
             $error = $result;
