@@ -12,5 +12,6 @@ RewriteRule ^favicon.png$ /resources/nerd.png [R=301,L]
 RewriteRule \.(js|ico|gif|jpg|jpeg|png|css|swf|pdf|doc|xls|txt)$ - [L,QSA]
 
 #obecna presmerovani pro controllery
+RewriteRule ^(.*)/(.*)/(.*) router.php?controller=$1&action=$2&parameter=$3 [L,QSA]
 RewriteRule ^(.*)/(.*) router.php?controller=$1&action=$2 [L,QSA]
 RewriteRule ^(.*) router.php?controller=$1 [L,QSA]

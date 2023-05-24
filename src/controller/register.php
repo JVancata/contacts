@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../model/user.php";
 $userModel = new UserModel();
 $error = $_GET["error"] ?? null;
+$message = $_GET["message"] ?? null;
 
 if (!empty($_SESSION["user"])) {
     header('Location: /dashboard');

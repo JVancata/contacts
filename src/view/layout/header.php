@@ -1,7 +1,7 @@
 <header>
     <div class="row">
         <div class="col">
-            <h1 class="d-inline">CMS</h1>
+            <h1 class="d-inline"><a class="link-to-dashboard" href="/dashboard" title="Zpět na hlavní stránku">CMS</a></h1>
         </div>
         <div class="col text-end">
             <?php

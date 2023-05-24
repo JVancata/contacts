@@ -4,6 +4,9 @@
         if ($error) {
             require 'form_error.php';
         }
+        if ($message) {
+            require 'form_message.php';
+        }
         ?>
         <div class="my-3 row">
             <label for="inputUsername" class="col-sm-6 col-form-label">Přihlašovací jméno</label>

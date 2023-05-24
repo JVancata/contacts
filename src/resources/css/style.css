@@ -24,3 +24,12 @@ header {
 header h1 {
     font-size: 20px;
 }
+
+.contact-name {
+    display: inline-block;
+}
+
+.link-to-dashboard {
+    color:white;
+    text-decoration: none;
+}

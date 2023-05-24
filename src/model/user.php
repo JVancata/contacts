@@ -46,10 +46,6 @@ class UserModel extends BaseModel {
         $parameters = array(":username" => $username, ":password" => $passwordHash, ":email" => $email);
         $result = self::$database->execute($query, $parameters);
 
-        //echo "result:";
-        //echo $result;
-        //exit();
-
         if($result) {
             $user = $this->loginUser($username, $password);
             return $user;
