@@ -2,6 +2,10 @@
 
 require_once __DIR__ . "/../model/contact.php";
 $contactModel = new ContactModel();
+
+require_once __DIR__ . "/../model/group.php";
+$groupModel = new GroupModel();
+
 $error = $_GET["error"] ?? null;
 $message = $_GET["message"] ?? null;
 userGuard();
@@ -52,6 +56,9 @@ if ($action === "detail") {
         if (empty($contact)) {
             $isOk = false;
         }
+
+        $contactGroups = $groupModel->getGroupsForContact($contact["id"]);
+        $allGroups = $groupModel->getGroupsForUser($_SESSION["unserializedUser"]->id);
     }
 
     if (!$isOk) {

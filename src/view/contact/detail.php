@@ -36,7 +36,11 @@ require_once __DIR__ . "/../layout/layout_top.php";
                         </div>
                         <div class="col-md-12 col-12">
                             <span class="d-block pt-3">
-                                Spolužák, 4Story, smraďoch
+                                <?php
+                                foreach ($contactGroups as $contactGroup) {
+                                    echo '<span class="badge me-2" style="background-color:' . $contactGroup["background_color"] . ';color:' . $contactGroup["text_color"] . '">' . $contactGroup["name"] . '</span>';
+                                }
+                                ?>
                                 <button class="btn badge rounded-pill text-bg-primary" data-bs-toggle="modal" data-bs-target="#groupAssignModal"><i class="fa-solid fa-plus"></i></button>
                             </span>
                         </div>

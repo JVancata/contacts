@@ -34,9 +34,8 @@ class Database {
     /**
      * @param string $query SQL Query, parameters are used like this: :username
      * @param array|null $parameterArray associative array of parameters - array(":username"=>$username)
-     * @return any resulting query data with PDO::FETCH_ASSOC
+     * @return int result from database
      */
-
     public function execute($query, $parameterArray) {
         $prepared = $this->db->prepare($query);
         $result = $prepared->execute($parameterArray);
@@ -44,6 +43,22 @@ class Database {
         return $result;
     }
 
+    /**
+     * @param string $query SQL Query, parameters are used like this: :username
+     * @param array|null $parameterArray associative array of parameters - array(":username"=>$username)
+     * @return int inserted ID
+     */
+    public function insert($query, $parameterArray) {
+        $prepared = $this->db->prepare($query);
+        $result = $prepared->execute($parameterArray);
+        return $this->db->lastInsertId();
+    }
+
+    /**
+     * @param string $query SQL Query, parameters are used like this: :username
+     * @param array|null $parameterArray associative array of parameters - array(":username"=>$username)
+     * @return any resulting query data with PDO::FETCH_ASSOC
+     */
     public function fetchOne($query, $parameterArray) {
         $prepared = $this->db->prepare($query);
         $prepared->execute($parameterArray);
@@ -51,7 +66,12 @@ class Database {
 
         return $values;
     }
-    
+
+    /**
+     * @param string $query SQL Query, parameters are used like this: :username
+     * @param array|null $parameterArray associative array of parameters - array(":username"=>$username)
+     * @return any resulting query data with PDO::FETCH_ASSOC
+     */
     public function fetchAll($query, $parameterArray) {
         $prepared = $this->db->prepare($query);
         $prepared->execute($parameterArray);
