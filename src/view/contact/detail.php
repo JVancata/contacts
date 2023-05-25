@@ -10,6 +10,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
     <?php
     require 'group_assign_modal.php';
     require 'note_edit_modal.php';
+    require 'contact_edit_modal.php';
     if ($error) {
         require 'form_error.php';
     }
@@ -25,26 +26,32 @@ require_once __DIR__ . "/../layout/layout_top.php";
                 </div>
                 <div class="col-md-7">
                     <div class="row">
-                        <div class="col-md-12 col-6">
+                        <div class="col-md-12 col-7">
                             <?php
                             if (!empty($contact["last_name"])) {
-                                echo '<h3><i class="fa-solid fa-user me-3"></i>' . $contact["first_name"] . ' ' . $contact["last_name"] . '</h3>';
-                            } else {
-                                echo '<h3><i class="fa-solid fa-user me-3"></i></h3>';
+                                echo '<h3 class="contact-name-heading"><i class="fa-solid fa-user me-3"></i>' . $contact["first_name"] . ' ' . $contact["last_name"] . '</h3>';
                             }
                             if (!empty($contact["nickname"])) {
-                                echo '<h3><i class="fa-solid fa-user-group me-2"></i>"' . $contact["nickname"] . '"</h3>';
-                            } else {
-                                echo '<h3><i class="fa-solid fa-user-group me-2"></i></h3>';
+                                echo '<h3 class="contact-name-heading"><i class="fa-solid fa-user-group me-2"></i>"' . $contact["nickname"] . '"</h3>';
                             }
                             ?>
 
                             <hr class="d-md-block d-none">
                         </div>
-                        <div class="col-md-12 col-6">
-                            <span class="d-block"><i class="fa-solid fa-cake-candles"></i> <?php echo $contact["birth_date"] ? date("d. m. Y", strtotime($contact["birth_date"])) : "Nezadáno."; ?></span>
-                            <span class="d-block"><i class="fa-solid fa-calendar-days"></i> <?php echo date("d. m. Y", strtotime($contact["created_at"])); ?></span>
+                        <div class="col-md-12 col-5">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <span class="d-block"><i class="fa-solid fa-cake-candles"></i> <?php echo $contact["birth_date"] ? date("d. m. Y", strtotime($contact["birth_date"])) : "Nezadáno."; ?></span>
+                                    <span class="d-block"><i class="fa-solid fa-calendar-days"></i> <?php echo date("d. m. Y", strtotime($contact["created_at"])); ?></span>
+                                </div>
+                                <div class="col-md-3 text-md-end">
+                                    <button class="btn p-0" id="profileEditButton" data-bs-toggle="modal" data-bs-target="#contactEditModal">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="col-md-12 col-12">
                             <span class="d-block pt-3">
                                 <?php
@@ -188,6 +195,8 @@ require_once __DIR__ . "/../layout/layout_top.php";
     for (const button of noteEditButtons) {
         button.addEventListener("click", prepareTheNoteEdit);
     }
+
+    // Profile edit
 </script>
 
 

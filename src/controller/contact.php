@@ -63,8 +63,64 @@ if ($action === "add") {
         exit();
     }
 }
+//
+else if ($action === "edit") {
+    $isOk = true;
 
-if ($action === "detail") {
+    // Contact must have either a nickname or first + last name
+    $hasIdentifyingName = false;
+
+    if (!empty($_POST["nickname"])) {
+        $hasIdentifyingName = true;
+    }
+
+    if (!empty($_POST["first_name"]) && !empty($_POST["last_name"])) {
+        $hasIdentifyingName = true;
+    }
+
+    if (!$hasIdentifyingName) {
+        $isOk = false;
+        $error = "NO_IDENTIFYING_NAME";
+    }
+
+    if (!empty($_POST["birth_date"])) {
+        $timestamp = strtotime($_POST["birth_date"]);
+        if ($_POST["birth_date"] !== date("Y-m-d", $timestamp)) {
+            $isOk = false;
+            $error = "INVALID_BIRTH_DATE";
+        }
+    }
+    //
+    else {
+        $_POST["birth_date"] = null;
+    }
+
+    if (!is_numeric($_POST["contactId"])) {
+        $isOk = false;
+        $error = "INVALID_CONTACT_ID";
+    }
+
+    if ($isOk) {
+        $result = $contactModel->updateContactForUser($_SESSION["unserializedUser"]->id, $_POST["contactId"], htmlspecialchars($_POST["first_name"]), htmlspecialchars($_POST["last_name"]), htmlspecialchars($_POST["nickname"]), $_POST["birth_date"]);
+
+        if (!$result) {
+            $error = "CONTACT_UPDATE_ERROR";
+            $isOk = false;
+        }
+        //
+        else {
+            header('Location: /contact/detail/' . $_POST["contactId"] . '?message=CONTACT_UPDATED');
+            exit();
+        }
+    }
+
+    if (!$isOk) {
+        header('Location: /dashboard?error=' . $error);
+        exit();
+    }
+}
+//
+else if ($action === "detail") {
     $isOk = true;
     $result = null;
 

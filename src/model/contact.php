@@ -46,4 +46,21 @@ class ContactModel extends BaseModel {
 
         return $result;
     }
+
+    /**
+     * @param int $userId ID of the contact owner
+     * @param int $userId ID of the contact
+     * @param int $firstName
+     * @param int $lastName
+     * @param int $nickname
+     * @param string $birthDate YYYY-MM-DD 
+     * @return int result
+     */
+    public function updateContactForUser($userId, $contactId, $firstName, $lastName, $nickname, $birthDate) {
+        $query = 'UPDATE contacts SET first_name = :first_name, last_name = :last_name, nickname = :nickname, birth_date = :birth_date WHERE user_id = :user_id AND id = :contact_id';
+        $parameters = array(":user_id" => $userId, ":contact_id" => $contactId, ":first_name" => $firstName, ":last_name" => $lastName, ":nickname" => $nickname, ":birth_date" => $birthDate);
+        $result = self::$database->execute($query, $parameters);
+
+        return $result;
+    }
 }

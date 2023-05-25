@@ -50,3 +50,10 @@ header h1 {
 #noteEditTextarea {
     min-height: 200px;
 }
+
+
+@media only screen and (max-width: 600px) {
+    .contact-name-heading {
+        font-size: 18px;
+    }
+}
