@@ -10,13 +10,28 @@ class NoteModel extends BaseModel {
     /**
      * Warning!!! This does not check that the user owns the contact!
      * @param string $contactId id of contact
-     * @param string $note note - must be already escaped
+     * @param string $note note - must be already sanitized
      * @param boolean $hidden hidden
      * @return integer result of the DB query
      */
     public function createNoteForContact($contactId, $note, $hidden) {
         $query = 'INSERT INTO contact_notes (contact_id, note, hidden) VALUES (:contact_id, :note, :hidden)';
         $parameters = array(":contact_id" => $contactId, ":note" => $note, ":hidden" => $hidden);
+        $result = self::$database->execute($query, $parameters);
+
+        return $result;
+    }
+
+    /**
+     * Warning!!! This does not check that the user owns the contact!
+     * @param string $contactId id of contact
+     * @param string $noteId id of note
+     * @param string $note note - must be already sanitized
+     * @return integer result of the DB query
+     */
+    public function updateNoteForContact($contactId, $noteId, $note) {
+        $query = 'UPDATE contact_notes SET note = :note WHERE id = :note_id AND contact_id = :contact_id';
+        $parameters = array(":contact_id" => $contactId, ":note_id" => $noteId, ":note" => $note);
         $result = self::$database->execute($query, $parameters);
 
         return $result;

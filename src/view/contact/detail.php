@@ -9,6 +9,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
 <div class="container">
     <?php
     require 'group_assign_modal.php';
+    require 'note_edit_modal.php';
     if ($error) {
         require 'form_error.php';
     }
@@ -109,9 +110,9 @@ require_once __DIR__ . "/../layout/layout_top.php";
                                 </button>
                                 <ul class="dropdown-menu">
                                 ' . ($note["hidden"] == 1 ? '<li><a role="button" class="dropdown-item note-show-button" href="#" data-id=' . $note["id"] . ' >Zobrazit</a></li>' : "") . '
-                                <li><a role="button" class="dropdown-item note-show-button" href="#" data-id=' . $note["id"] . ' >Upravit</a></li>
+                                <li><a role="button" data-bs-toggle="modal" data-bs-target="#noteEditModal" class="dropdown-item note-edit-button" href="#" data-id=' . $note["id"] . ' >Upravit</a></li>
                                 <li><a class="dropdown-item" href="/note/' . ($note["hidden"] == 1 ? 'unhide' : 'hide') . '?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" role="button">Permanentně ' . ($note["hidden"] == 1 ? 'odkrýt' : 'skrýt') . '</a></li>
-                                <li><a class="dropdown-item" href="/note/delete?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" onclick="return confirm("Opravdu chcete smazat poznámku?")">Smazat</a></li>
+                                <li><a class="dropdown-item" href="/note/delete?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" onclick="return confirm(`Opravdu chcete smazat poznámku?`)">Smazat</a></li>
                                 </ul>
                             </div>
                         </td>';
@@ -148,9 +149,9 @@ require_once __DIR__ . "/../layout/layout_top.php";
             visibilityToggleButton.querySelector("i").classList.add("fa-eye");
         }
     }
-
     visibilityToggleButton.addEventListener("click", handleToggle);
-    // Note detail form
+
+    // Note hide/show
     const showTheNote = (e) => {
         const td = document.querySelector(`td[data-noteid="${e.target.dataset.id}"]`);
 
@@ -159,7 +160,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
             e.target.textContent = "Skrýt";
             td.dataset.hidden = "0";
         } else {
-            td.innerHTML = Array(parseInt(td.dataset.length)+1).join("*");
+            td.innerHTML = Array(parseInt(td.dataset.length) + 1).join("*");
             e.target.textContent = "Zobrazit";
             td.dataset.hidden = "1";
         }
@@ -169,6 +170,23 @@ require_once __DIR__ . "/../layout/layout_top.php";
 
     for (const button of noteShowButtons) {
         button.addEventListener("click", showTheNote);
+    }
+
+    // Note edit modal
+    const noteEditButtons = document.querySelectorAll(".note-edit-button") ?? [];
+    const noteEditTextarea = document.querySelector("#noteEditTextarea");
+    const noteEditNoteIdInput = document.querySelector("#noteEditNoteIdInput");
+
+    const prepareTheNoteEdit = (e) => {
+        const td = document.querySelector(`td[data-noteid="${e.target.dataset.id}"]`);
+
+        noteEditTextarea.innerHTML = td.dataset.note.replaceAll("<br>", "\n");
+        noteEditNoteIdInput.value = e.target.dataset.id;
+    }
+
+
+    for (const button of noteEditButtons) {
+        button.addEventListener("click", prepareTheNoteEdit);
     }
 </script>
 
