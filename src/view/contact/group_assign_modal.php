@@ -7,14 +7,6 @@
             </div>
             <div class="modal-body">
                 <div class="login-form-container">
-                    <?php
-                    if ($error) {
-                        require 'form_error.php';
-                    }
-                    if ($message) {
-                        require 'form_message.php';
-                    }
-                    ?>
                     <select class="form-select" aria-label="Default select example" required name="groupId" id="groupAssignSelect">
                         <?php
                         $returnId = function ($element) {

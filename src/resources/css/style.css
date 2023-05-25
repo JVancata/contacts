@@ -9,7 +9,7 @@ footer {
     width: 100%;
     text-align: center;
     padding: 12px;
-    position: absolute;
+    position: fixed;
     bottom: 0;
 }
 
@@ -37,4 +37,8 @@ header h1 {
 .group-dot {
     width: 15px;
     height: 15px;
+}
+
+.note-action {
+    max-width: 30px;
 }

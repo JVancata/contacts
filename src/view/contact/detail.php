@@ -9,6 +9,12 @@ require_once __DIR__ . "/../layout/layout_top.php";
 <div class="container">
     <?php
     require 'group_assign_modal.php';
+    if ($error) {
+        require 'form_error.php';
+    }
+    if ($message) {
+        require 'form_message.php';
+    }
     ?>
     <div class="row">
         <div class="col-lg-6">
@@ -21,10 +27,14 @@ require_once __DIR__ . "/../layout/layout_top.php";
                         <div class="col-md-12 col-6">
                             <?php
                             if (!empty($contact["last_name"])) {
-                                echo '<h3>' . $contact["first_name"] . ' ' . $contact["last_name"] . '</h3>';
+                                echo '<h3><i class="fa-solid fa-user me-3"></i>' . $contact["first_name"] . ' ' . $contact["last_name"] . '</h3>';
+                            } else {
+                                echo '<h3><i class="fa-solid fa-user me-3"></i></h3>';
                             }
                             if (!empty($contact["nickname"])) {
-                                echo '<h3>"' . $contact["nickname"] . '"</h3>';
+                                echo '<h3><i class="fa-solid fa-user-group me-2"></i>"' . $contact["nickname"] . '"</h3>';
+                            } else {
+                                echo '<h3><i class="fa-solid fa-user-group me-2"></i></h3>';
                             }
                             ?>
 
@@ -45,16 +55,122 @@ require_once __DIR__ . "/../layout/layout_top.php";
                             </span>
                         </div>
                     </div>
-
                 </div>
             </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>Tady jsou informace k týpkovi, socials si sem dám</h3>
         </div>
     </div>
     <hr>
     <div class="row">
+        <div class="col-md-9">
+            <form method="POST" action="/note/insert" class="row pb-3">
+                <div class="col-md-10">
+                    <div class="form-floating">
+                        <textarea class="form-control" name="note" placeholder="Nová poznámka" id="floatingTextarea"></textarea>
+                        <label for="floatingTextarea">Nová poznámka</label>
+                    </div>
+                </div>
+                <div class="col-md-2 pt-2">
+                    <button type="submit" class="btn btn-success" title="Uložit poznámku">
+                        <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                    <button type="button" class="btn btn-warning text-white" id="changeNewNoteVisibility" title="Změnit viditelnost">
+                        <i class="fa-solid fa-eye" style="width:20px"></i>
+                    </button>
+                </div>
+                <input type="hidden" name="hidden" value="false">
+                <input type="hidden" name="contactId" value="<?php echo $contact["id"]; ?>">
+            </form>
+            <table class="table">
+                <tbody>
+                    <?php
+                    //print_r($notes);
+                    foreach ($notes as $note) {
+                        echo "<tr class='row'>";
 
+                        echo '<td class="col-10 ps-3" class="" data-noteid="' . $note["id"] . '" data-length="' . strlen($note["note"]) . '" data-note="' . $note["note"] . '" data-hidden=' . $note["hidden"] . '>';
+
+                        if ($note["hidden"] == 1) {
+                            echo str_repeat("*", strlen($note["note"]));
+                        }
+                        //
+                        else {
+                            echo $note["note"];
+                        }
+                        echo "</td>";
+
+                        echo '
+                        <td class="col-2">
+                            <div class="dropdown ms-1">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                ' . ($note["hidden"] == 1 ? '<li><a role="button" class="dropdown-item note-show-button" href="#" data-id=' . $note["id"] . ' >Zobrazit</a></li>' : "") . '
+                                <li><a role="button" class="dropdown-item note-show-button" href="#" data-id=' . $note["id"] . ' >Upravit</a></li>
+                                <li><a class="dropdown-item" href="/note/' . ($note["hidden"] == 1 ? 'unhide' : 'hide') . '?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" role="button">Permanentně ' . ($note["hidden"] == 1 ? 'odkrýt' : 'skrýt') . '</a></li>
+                                <li><a class="dropdown-item" href="/note/delete?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" onclick="return confirm("Opravdu chcete smazat poznámku?")">Smazat</a></li>
+                                </ul>
+                            </div>
+                        </td>';
+
+                        echo "</tr>";
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <h3>Tady budou vazby mezi kontakty</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <h3>Tady budou fotky</h3>
+        </div>
     </div>
 </div>
+<script>
+    // Add note form
+    const visibilityToggleButton = document.querySelector("#changeNewNoteVisibility");
+    const hiddenVisibilityInput = document.querySelector("input[name=hidden]");
+
+    const handleToggle = () => {
+        if (hiddenVisibilityInput.value === "false") {
+            hiddenVisibilityInput.value = "true";
+            visibilityToggleButton.querySelector("i").classList.remove("fa-eye");
+            visibilityToggleButton.querySelector("i").classList.add("fa-eye-slash");
+        } else {
+            hiddenVisibilityInput.value = "false";
+            visibilityToggleButton.querySelector("i").classList.remove("fa-eye-slash");
+            visibilityToggleButton.querySelector("i").classList.add("fa-eye");
+        }
+    }
+
+    visibilityToggleButton.addEventListener("click", handleToggle);
+    // Note detail form
+    const showTheNote = (e) => {
+        const td = document.querySelector(`td[data-noteid="${e.target.dataset.id}"]`);
+
+        if (td.dataset.hidden === "1") {
+            td.innerHTML = td.dataset.note;
+            e.target.textContent = "Skrýt";
+            td.dataset.hidden = "0";
+        } else {
+            td.innerHTML = Array(parseInt(td.dataset.length)+1).join("*");
+            e.target.textContent = "Zobrazit";
+            td.dataset.hidden = "1";
+        }
+    }
+
+    const noteShowButtons = document.querySelectorAll(".note-show-button") ?? [];
+
+    for (const button of noteShowButtons) {
+        button.addEventListener("click", showTheNote);
+    }
+</script>
 
 
 <?php

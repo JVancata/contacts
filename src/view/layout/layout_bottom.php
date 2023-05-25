@@ -1,7 +1,9 @@
 <?php
 require 'footer.php';
 ?>
-<script src="/resources/js/bootstrap.min.js">
+
+
+<script src="/resources/js/bootstrap.bundle.min.js">
 </script>
 </body>
 

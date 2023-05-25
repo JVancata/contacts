@@ -6,6 +6,9 @@ $contactModel = new ContactModel();
 require_once __DIR__ . "/../model/group.php";
 $groupModel = new GroupModel();
 
+require_once __DIR__ . "/../model/note.php";
+$noteModel = new NoteModel();
+
 $error = $_GET["error"] ?? null;
 $message = $_GET["message"] ?? null;
 userGuard();
@@ -56,9 +59,13 @@ if ($action === "detail") {
         if (empty($contact)) {
             $isOk = false;
         }
-
-        $contactGroups = $groupModel->getGroupsForContact($contact["id"]);
-        $allGroups = $groupModel->getGroupsForUser($_SESSION["unserializedUser"]->id);
+        // Otherwise load the data
+        else {
+            $contactGroups = $groupModel->getGroupsForContact($contact["id"]);
+            $allGroups = $groupModel->getGroupsForUser($_SESSION["unserializedUser"]->id);
+            
+            $notes = $noteModel->getNotesForContact($contact["id"]);
+        }
     }
 
     if (!$isOk) {
