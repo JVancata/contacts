@@ -75,7 +75,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
                 </div>
                 <div class="col-md-2 pt-2">
                     <button type="submit" class="btn btn-success" title="Uložit poznámku">
-                        <i class="fa-solid fa-paper-plane"></i>
+                        <i class="fa-solid fa-plus"></i>
                     </button>
                     <button type="button" class="btn btn-warning text-white" id="changeNewNoteVisibility" title="Změnit viditelnost">
                         <i class="fa-solid fa-eye" style="width:20px"></i>
