@@ -42,7 +42,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
                             <hr class="d-md-block d-none">
                         </div>
                         <div class="col-md-12 col-6">
-                            <span class="d-block"><i class="fa-solid fa-cake-candles"></i> <?php echo $contact["birthday"] ?? "Nezadáno."; ?></span>
+                            <span class="d-block"><i class="fa-solid fa-cake-candles"></i> <?php echo $contact["birth_date"] ? date("d. m. Y", strtotime($contact["birth_date"])) : "Nezadáno."; ?></span>
                             <span class="d-block"><i class="fa-solid fa-calendar-days"></i> <?php echo date("d. m. Y", strtotime($contact["created_at"])); ?></span>
                         </div>
                         <div class="col-md-12 col-12">

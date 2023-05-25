@@ -12,6 +12,12 @@ require_once __DIR__ . "/../layout/layout_top.php";
 
     <?php
     require 'contact_add_form_modal.php';
+    if ($error) {
+        require 'form_error.php';
+    }
+    if ($message) {
+        require 'form_message.php';
+    }
     ?>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactAddModal">
         Přidat kontakt

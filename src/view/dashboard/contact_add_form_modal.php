@@ -7,14 +7,6 @@
             </div>
             <div class="modal-body">
                 <div class="login-form-container">
-                    <?php
-                    if ($error) {
-                        require 'form_error.php';
-                    }
-                    if ($message) {
-                        require 'form_message.php';
-                    }
-                    ?>
                     <div class="my-3 row">
                         <label for="inputFirstName" class="col-sm-6 col-form-label">Křestní jméno</label>
                         <div class="col-sm-6">
@@ -31,6 +23,12 @@
                         <label for="inputNickname" class="col-sm-6 col-form-label">Přezdívka</label>
                         <div class="col-sm-6">
                             <input type="text" class="form-control" id="inputNickname" placeholder="Přezdívka" name="nickname" value="<?php echo $_SESSION["last_form"]["nickname"] ?? ""; ?>">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputNickname" class="col-sm-6 col-form-label">Datum narození</label>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="inputBirthdate" placeholder="Datum narození" name="birth_date" value="<?php echo $_SESSION["last_form"]["birth_date"] ?? ""; ?>">
                         </div>
                     </div>
                 </div>

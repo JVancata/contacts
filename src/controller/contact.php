@@ -27,13 +27,32 @@ if ($action === "add") {
         $hasIdentifyingName = true;
     }
 
-    if ($hasIdentifyingName) {
-        $result = $contactModel->createContactForUser($_SESSION["unserializedUser"]->id, htmlspecialchars($_POST["first_name"]), htmlspecialchars($_POST["last_name"]), htmlspecialchars($_POST["nickname"]), htmlspecialchars($_POST["birth_date"]));
+    if (!$hasIdentifyingName) {
+        $isOk = false;
+        $error = "NO_IDENTIFYING_NAME";
+    }
+
+    if (!empty($_POST["birth_date"])) {
+        $timestamp = strtotime($_POST["birth_date"]);
+        if ($_POST["birth_date"] !== date("Y-m-d", $timestamp)) {
+            $isOk = false;
+            $error = "INVALID_BIRTH_DATE";
+        }
+    }
+    //
+    else {
+        $_POST["birth_date"] = null;
+    }
+
+    if ($isOk) {
+        $result = $contactModel->createContactForUser($_SESSION["unserializedUser"]->id, htmlspecialchars($_POST["first_name"]), htmlspecialchars($_POST["last_name"]), htmlspecialchars($_POST["nickname"]), $_POST["birth_date"]);
 
         if (!$result) {
             $error = "CONTACT_INSERT_ERROR";
             $isOk = false;
-        } else {
+        }
+        //
+        else {
             header('Location: /dashboard?message=CONTACT_INSERTED');
             exit();
         }
@@ -63,7 +82,7 @@ if ($action === "detail") {
         else {
             $contactGroups = $groupModel->getGroupsForContact($contact["id"]);
             $allGroups = $groupModel->getGroupsForUser($_SESSION["unserializedUser"]->id);
-            
+
             $notes = $noteModel->getNotesForContact($contact["id"]);
         }
     }
