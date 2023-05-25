@@ -8,6 +8,7 @@ $groupModel = new GroupModel();
 
 $error = $_GET["error"] ?? null;
 $message = $_GET["message"] ?? null;
+userGuard();
 
 if ($action === "add") {
     $isOk = true;
