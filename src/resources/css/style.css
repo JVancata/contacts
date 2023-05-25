@@ -51,6 +51,27 @@ header h1 {
     min-height: 200px;
 }
 
+.word-break {
+    word-break: break-word;
+}
+
+.contact-photo {
+    height: 300px;
+    width: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: block;
+}
+
+.contact-photo-button-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.contact-photo-container {
+    position: relative;
+}
 
 @media only screen and (max-width: 600px) {
     .contact-name-heading {

@@ -18,7 +18,7 @@ if (empty($seo)) {
     <link rel="stylesheet" href="/resources/css/font_awesome_all.min.css">
 </head>
 
-<body>
+<body class="pb-5">
     <?php
     require 'header.php';
     ?>

@@ -9,7 +9,7 @@ if (empty($controller)) {
     header('Location: /login');
 }
 
-$allowedControllers = array("login", "register", "dashboard", "logout", "contact", "404", "group", "note", "uploads");
+$allowedControllers = array("login", "register", "dashboard", "logout", "contact", "404", "group", "note", "uploads", "photo");
 
 if (in_array($controller, $allowedControllers)) {
     require __DIR__ . "/controller/" . $controller . '.php';

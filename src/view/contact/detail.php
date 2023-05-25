@@ -11,6 +11,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
     require 'group_assign_modal.php';
     require 'note_edit_modal.php';
     require 'contact_edit_modal.php';
+    require 'photo_upload_modal.php';
     if ($error) {
         require 'form_error.php';
     }
@@ -22,7 +23,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
         <div class="col-lg-6">
             <div class="row">
                 <div class="col-md-5 text-center text-md-start pb-md-0 pb-3">
-                    <img width="200" alt="Profilová fotografie" src="<?php echo $contact["profile_photo"] ?? "https://as.vse.cz/wp-content/uploads/marek_petr-150x150.jpg" ?>">
+                    <img width="200" alt="Profilová fotografie" src="<?php echo $contact["profile_photo"] ? "/uploads/" . $contact["profile_photo_path"] : "https://as.vse.cz/wp-content/uploads/marek_petr-150x150.jpg" ?>">
                 </div>
                 <div class="col-md-7">
                     <div class="row">
@@ -98,7 +99,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
                     foreach ($notes as $note) {
                         echo "<tr class='row'>";
 
-                        echo '<td class="col-10 ps-3" class="" data-noteid="' . $note["id"] . '" data-length="' . strlen($note["note"]) . '" data-note="' . $note["note"] . '" data-hidden=' . $note["hidden"] . '>';
+                        echo '<td class="col-10 ps-3 word-break" class="" data-noteid="' . $note["id"] . '" data-length="' . strlen($note["note"]) . '" data-note="' . $note["note"] . '" data-hidden=' . $note["hidden"] . '>';
 
                         if ($note["hidden"] == 1) {
                             echo str_repeat("*", strlen($note["note"]));
@@ -135,8 +136,28 @@ require_once __DIR__ . "/../layout/layout_top.php";
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
-            <h3>Tady budou fotky</h3>
+        <div class="col-3">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#photoUploadModal">
+                Přidat fotku
+            </button>
+        </div>
+        <div class="col-12 pt-3">
+
+            <div class="row">
+                <?php
+                foreach ($photos as $photo) {
+                    echo '<div class="col-xl-4 col-md-4 col-6">';
+                    echo '<div class="contact-photo-container">';
+                    echo '<span class="contact-photo" style="background-image:url(/uploads/' . $photo["path"] . ');" title="Fotografie ' . $photo["id"] . ' ke kontaktu."></span>';
+                    echo '<div class="contact-photo-button-container">
+                    <a class="btn btn-secondary" href="/contact/profilephoto?contactId=' . $contact["id"] . '&photoId=' . $photo["id"] . '" onclick="return confirm(`Nastavit jako profilovku?`)"><i class="fa-solid fa-user"></i></a>
+                    <a class="btn btn-danger" href="/photo/delete?contactId=' . $contact["id"] . '&photoId=' . $photo["id"] . '" onclick="return confirm(`Opravdu nenávratně smazat?`)"><i class="fa-solid fa-trash"></i></a>
+                    </div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+                ?>
+            </div>
         </div>
     </div>
 </div>

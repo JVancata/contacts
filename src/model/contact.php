@@ -24,11 +24,14 @@ class ContactModel extends BaseModel {
      * @return Contact[]
      */
     public function getOneContactForUser($userId, $contactId) {
-        $query = 'SELECT id, first_name, last_name, nickname, birth_date, created_at, profile_photo FROM contacts WHERE user_id = :user_id AND id = :contact_id';
+        $query = 'SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.nickname, contacts.birth_date, contacts.created_at, contacts.profile_photo, photos.path AS profile_photo_path FROM contacts 
+        LEFT JOIN photos ON photos.id = contacts.profile_photo
+        WHERE contacts.user_id = :user_id AND contacts.id = :contact_id';
         $parameters = array(":user_id" => $userId, ":contact_id" => $contactId);
         $result = self::$database->fetchOne($query, $parameters);
 
         return $result;
+        
     }
 
     /**
@@ -59,6 +62,20 @@ class ContactModel extends BaseModel {
     public function updateContactForUser($userId, $contactId, $firstName, $lastName, $nickname, $birthDate) {
         $query = 'UPDATE contacts SET first_name = :first_name, last_name = :last_name, nickname = :nickname, birth_date = :birth_date WHERE user_id = :user_id AND id = :contact_id';
         $parameters = array(":user_id" => $userId, ":contact_id" => $contactId, ":first_name" => $firstName, ":last_name" => $lastName, ":nickname" => $nickname, ":birth_date" => $birthDate);
+        $result = self::$database->execute($query, $parameters);
+
+        return $result;
+    }
+
+    /**
+     * Warning!!! This does not check that the photo belongs to the contact
+     * @param int $contactId ID of the contact
+     * @param int $photoId ID of the photo
+     * @return int result
+     */
+    public function updateContactProfilePhoto($contactId, $photoId) {
+        $query = 'UPDATE contacts SET profile_photo = :photo_id WHERE id = :contact_id';
+        $parameters = array(":contact_id" => $contactId, ":photo_id" => $photoId);
         $result = self::$database->execute($query, $parameters);
 
         return $result;

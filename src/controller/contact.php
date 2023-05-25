@@ -9,6 +9,9 @@ $groupModel = new GroupModel();
 require_once __DIR__ . "/../model/note.php";
 $noteModel = new NoteModel();
 
+require_once __DIR__ . "/../model/photo.php";
+$photoModel = new PhotoModel();
+
 $error = $_GET["error"] ?? null;
 $message = $_GET["message"] ?? null;
 userGuard();
@@ -120,6 +123,52 @@ else if ($action === "edit") {
     }
 }
 //
+else if ($action === "profilephoto") {
+    $isOk = true;
+
+    if (!is_numeric($_GET["contactId"])) {
+        $isOk = false;
+        $error = "INVALID_CONTACT_ID";
+    }
+
+    if (!is_numeric($_GET["photoId"])) {
+        $isOk = false;
+        $error = "INVALID_PHOTO_ID";
+    }
+
+    if ($isOk) {
+        // Check if the contact belongs to the user
+        $contact = $contactModel->getOneContactForUser($_SESSION["unserializedUser"]->id, $_GET["contactId"]);
+
+        if (!empty($contact)) {
+            // Check if the picture belongs to the contact
+            $photo = $photoModel->getPhotoForContact($contact["id"], $_GET["photoId"]);
+
+            if (!empty($photo)) {
+                $contactModel->updateContactProfilePhoto($contact["id"], $photo["id"]);
+            }
+            //
+            else {
+                $error = "INVALID_PHOTO";
+                $isOk = false;
+            }
+        }
+        //
+        else {
+            $error = "INVALID_CONTACT";
+            $isOk = false;
+        }
+    }
+
+    if (!$isOk) {
+        header('Location: /dashboard?error=' . $error);
+        exit();
+    }
+
+    header('Location: /contact/detail/' . $_GET["contactId"] . '?message=PHOTO_UPDATED');
+    exit();
+}
+//
 else if ($action === "detail") {
     $isOk = true;
     $result = null;
@@ -140,6 +189,8 @@ else if ($action === "detail") {
             $allGroups = $groupModel->getGroupsForUser($_SESSION["unserializedUser"]->id);
 
             $notes = $noteModel->getNotesForContact($contact["id"]);
+
+            $photos = $photoModel->getPhotosForContact($contact["id"]);
         }
     }
 

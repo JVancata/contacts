@@ -79,7 +79,7 @@ else if ($action === "edit") {
         $error = "INVALID_CONTACT_ID";
         $isOk = false;
     }
-    
+
     if (!is_numeric($_POST["noteId"])) {
         $error = "INVALID_NOTE_ID";
         $isOk = false;
@@ -156,7 +156,9 @@ else if ($action === "delete") {
         header('Location: /dashboard?error=' . $error);
         exit();
     }
-} else if ($action === "hide") {
+}
+//
+else if ($action === "hide") {
     $isOk = true;
 
     if (!is_numeric($_GET["contactId"])) {
@@ -192,7 +194,9 @@ else if ($action === "delete") {
         header('Location: /dashboard?error=' . $error);
         exit();
     }
-} else if ($action === "unhide") {
+}
+//
+else if ($action === "unhide") {
     $isOk = true;
 
     if (!is_numeric($_GET["contactId"])) {

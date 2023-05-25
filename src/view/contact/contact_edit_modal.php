@@ -36,7 +36,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zavřít</button>
-                <button type="submit" class="btn btn-success" value="Přidat kontakt">Přidat kontakt</button>
+                <button type="submit" class="btn btn-success" value="Přidat kontakt">Upravit kontakt</button>
             </div>
         </form>
     </div>
