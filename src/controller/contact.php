@@ -12,6 +12,9 @@ $noteModel = new NoteModel();
 require_once __DIR__ . "/../model/photo.php";
 $photoModel = new PhotoModel();
 
+require_once __DIR__ . "/../model/information.php";
+$informationModel = new InformationModel();
+
 $error = $_GET["error"] ?? null;
 $message = $_GET["message"] ?? null;
 userGuard();
@@ -191,6 +194,9 @@ else if ($action === "detail") {
             $notes = $noteModel->getNotesForContact($contact["id"]);
 
             $photos = $photoModel->getPhotosForContact($contact["id"]);
+            
+            $informationTypes = $informationModel->getInformationTypes();
+            $information = $informationModel->getInformationForContact($contact["id"]);
         }
     }
 

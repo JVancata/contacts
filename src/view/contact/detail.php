@@ -12,6 +12,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
     require 'note_edit_modal.php';
     require 'contact_edit_modal.php';
     require 'photo_upload_modal.php';
+    require 'information_add_modal.php';
     if ($error) {
         require 'form_error.php';
     }
@@ -23,7 +24,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
         <div class="col-lg-6">
             <div class="row">
                 <div class="col-md-5 text-center text-md-start pb-md-0 pb-3">
-                    <img width="200" alt="Profilová fotografie" src="<?php echo $contact["profile_photo"] ? "/uploads/" . $contact["profile_photo_path"] : "https://as.vse.cz/wp-content/uploads/marek_petr-150x150.jpg" ?>">
+                    <img width="200" alt="Profilová fotografie" src="<?php echo $contact["profile_photo"] ? "/uploads/" . $contact["profile_photo_path"] : "/resources/user_icon.png" ?>">
                 </div>
                 <div class="col-md-7">
                     <div class="row">
@@ -68,7 +69,17 @@ require_once __DIR__ . "/../layout/layout_top.php";
             </div>
         </div>
         <div class="col-lg-6">
-            <h3>Tady jsou informace k týpkovi, socials si sem dám</h3>
+            <div class="text-end">
+                <?php
+                foreach ($information as $singleInformation) {
+                    echo '<span class="d-block">' . $singleInformation["value"] . '<a href="/information/delete?contactId=' . $contact["id"] . '&informationId=' . $singleInformation["id"] . '" onclick="return confirm(`Opravdu chcete tuto informaci smazat?`)" class="ms-3 information-icon ' . $singleInformation["icon_class_name"] . '"></a></span>';
+                }
+                ?>
+                <button class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#informationAddModal">
+                    Přidat informaci
+                </button>
+            </div>
+
         </div>
     </div>
     <hr>
