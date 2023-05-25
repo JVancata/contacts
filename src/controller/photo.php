@@ -22,7 +22,7 @@ if ($action === "upload") {
         exit;
     }
 
-    if (empty($_FILES) || empty($_FILES["photoFile"])) {
+    if (empty($_FILES) || empty($_FILES["photoFile"]) || empty($_FILES["photoFile"]["name"])) {
         $error = "FILE_EMPTY";
         header('Location: /contact/detail/' . $_POST["contactId"] . '?error=' . $error);
         exit;
