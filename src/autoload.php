@@ -6,6 +6,7 @@ require_once "lib/database.php";
 require_once "lib/seo.php";
 require_once "lib/user.php";
 require_once "lib/user_guard.php";
+require_once "lib/send_mail.php";
 
 if(!empty($_SESSION["user"])) {
     $_SESSION["unserializedUser"] = unserialize($_SESSION["user"]);

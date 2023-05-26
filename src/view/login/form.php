@@ -21,7 +21,8 @@
             </div>
         </div>
         <div class="mb-3 row text-end">
-            <label for="inputPassword" class="col-sm-12 col-form-label"><a href="/register" title="Registrace">Registrace</a></label>
+            <label class="col-sm-12"><a href="/register" title="Registrace">Registrace</a></label>
+            <label class="col-sm-12"><a href="/password" title="Obnovení hesla">Obnovení hesla</a></label>
         </div>
         <div class="mb-3 row">
             <input type="submit" class="form-control btn btn-success" id="inputSubmit" value="Přihlásit">

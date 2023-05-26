@@ -6,3 +6,7 @@ define("DATABASEUSER", "USER");
 define("DATABASEPASSWORD", "PASSWORD");
 define("PRODUCTION", true);
 define("SESSIONTOKEN", "SESSIONTOKEN");
+define("SMTPHOST", "SMTPHOST");
+define("SMTPPORT", 465);
+define("SMTPUSER", "SMTPUSER");
+define("SMTPPASSWORD", "SMTPPASSWORD");
