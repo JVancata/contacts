@@ -8,8 +8,6 @@ services:
       - MYSQL_PASSWORD
       - MYSQL_DATABASE
       - MYSQL_RANDOM_ROOT_PASSWORD=true
-    ports:
-      - 3306:3306
     volumes:
       - ./ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
 
@@ -23,7 +21,7 @@ services:
       - PRODUCTION
       - SESSION_TOKEN
     volumes:
-      - ./uploads:/app/uploads
+      - ./uploads:/var/www/html/uploads
     ports:
       - 8080:80
     depends_on:
