@@ -1,5 +1,7 @@
 <footer class="">
-    <?php
-    echo date("Y-m-d H:i:s");
-    ?>
+    <span>
+        <?php
+        echo date("Y-m-d H:i:s");
+        ?>
+    </span>
 </footer>
