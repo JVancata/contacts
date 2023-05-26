@@ -2,10 +2,10 @@
     <div class="login-form-container">
         <?php
         if ($error) {
-            require 'form_error.php';
+            require __DIR__ . '/../form/form_error.php';
         }
         if ($message) {
-            require 'form_message.php';
+            require __DIR__ . '/../form/form_message.php';
         }
         ?>
         <div class="my-3 row">

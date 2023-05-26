@@ -13,22 +13,26 @@ require_once __DIR__ . "/../layout/layout_top.php";
     <?php
     require 'contact_add_form_modal.php';
     if ($error) {
-        require 'form_error.php';
+        require __DIR__ . '/../form/form_error.php';
     }
     if ($message) {
-        require 'form_message.php';
+        require __DIR__ . '/../form/form_message.php';
     }
     ?>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactAddModal">
-        Přidat kontakt
-    </button>
+
 
 
     <?php
     if (!empty($contacts)) {
+        echo '<div class="text-end"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactAddModal">
+            Přidat kontakt
+        </button></div>';
         require 'contacts_table.php';
     } else {
-        echo "<h3>Seznam kontaktů je prázdný.</h3>";
+        echo "<h3 class='text-center'>Seznam kontaktů je prázdný.</h3>";
+        echo '<div class="text-center"><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contactAddModal">
+            Přidat kontakt
+        </button></div>';
     }
     ?>
 </div>

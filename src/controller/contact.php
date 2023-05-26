@@ -207,6 +207,27 @@ else if ($action === "detail") {
 
     require __DIR__ . '/../view/contact/detail.php';
 }
+//
+else if ($action === "delete") {
+    $isOk = true;
+    $result = null;
+
+    if (!is_numeric($_GET["parameter"])) {
+        $isOk = false;
+    }
+
+    if ($isOk) {
+        $contact = $contactModel->deleteContactFromUser($_SESSION["unserializedUser"]->id, $_GET["parameter"]);
+    }
+
+    if (!$isOk) {
+        header('Location: /404');
+        exit(404);
+    }
+    
+    header('Location: /dashboard');
+    exit();
+}
 
 
 $_SESSION["last_form"] = [];

@@ -14,10 +14,10 @@ require_once __DIR__ . "/../layout/layout_top.php";
     require 'photo_upload_modal.php';
     require 'information_add_modal.php';
     if ($error) {
-        require 'form_error.php';
+        require __DIR__ . '/../form/form_error.php';
     }
     if ($message) {
-        require 'form_message.php';
+        require __DIR__ . '/../form/form_message.php';
     }
     ?>
     <div class="row">
@@ -130,7 +130,7 @@ require_once __DIR__ . "/../layout/layout_top.php";
                                 <ul class="dropdown-menu">
                                 ' . ($note["hidden"] == 1 ? '<li><a role="button" class="dropdown-item note-show-button" href="#" data-id=' . $note["id"] . ' >Zobrazit</a></li>' : "") . '
                                 <li><a role="button" data-bs-toggle="modal" data-bs-target="#noteEditModal" class="dropdown-item note-edit-button" href="#" data-id=' . $note["id"] . ' >Upravit</a></li>
-                                <li><a class="dropdown-item" href="/note/' . ($note["hidden"] == 1 ? 'unhide' : 'hide') . '?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" role="button">Permanentně ' . ($note["hidden"] == 1 ? 'odkrýt' : 'skrýt') . '</a></li>
+                                <li><a class="dropdown-item" href="/note/' . ($note["hidden"] == 1 ? 'unhide' : 'hide') . '?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" role="button">Výchozí: ' . ($note["hidden"] == 1 ? 'odkrýt' : 'skrýt') . '</a></li>
                                 <li><a class="dropdown-item" href="/note/delete?noteId=' . $note["id"] . '&contactId=' . $contact["id"] . '" onclick="return confirm(`Opravdu chcete smazat poznámku?`)">Smazat</a></li>
                                 </ul>
                             </div>

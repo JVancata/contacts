@@ -30,6 +30,9 @@
             echo '<a class="btn btn-warning text-white" href="contact/detail/' . $contact["id"] . '" title="Kontakt ' . $contact["first_name"] . ' ' . $contact["last_name"] . ' ' . $contact["nickname"] . '">';
             echo '<i class="fa-solid fa-eye"></i>';
             echo '</a>';
+            echo '<a class="btn btn-danger ms-3 text-white" onclick="return confirm(`Opravdu chcete kontakt '. $contact["first_name"] . ' ' . $contact["last_name"] . ' ' . $contact["nickname"] . ' smazat? Nevratně zmizí veškeré jeho informace.`)" href="contact/delete/' . $contact["id"] . '" title="Kontakt ' . $contact["first_name"] . ' ' . $contact["last_name"] . ' ' . $contact["nickname"] . '">';
+            echo '<i class="fa-solid fa-trash"></i>';
+            echo '</a>';
 
             echo "</td>";
 

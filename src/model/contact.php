@@ -30,8 +30,21 @@ class ContactModel extends BaseModel {
         $parameters = array(":user_id" => $userId, ":contact_id" => $contactId);
         $result = self::$database->fetchOne($query, $parameters);
 
-        return $result;
-        
+        return $result;   
+    }
+    
+    /**
+     * @param string $userId id of the user
+     * @param string $contactId id of the contact
+     * @return Contact[]
+     */
+    public function deleteContactFromUser($userId, $contactId) {
+        $query = 'DELETE FROM contacts 
+        WHERE user_id = :user_id AND id = :contact_id';
+        $parameters = array(":user_id" => $userId, ":contact_id" => $contactId);
+        $result = self::$database->execute($query, $parameters);
+
+        return $result;   
     }
 
     /**
