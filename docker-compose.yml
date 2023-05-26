@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: mysql:8-debian
+    restart: unless-stopped
+    environment:
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+    volumes:
+      - ./ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
+
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+      - PRODUCTION
+      - SESSION_TOKEN
+    volumes:
+      - ./uploads:/var/www/html/uploads
+    ports:
+      - 8080:80
+    depends_on:
+      - db
